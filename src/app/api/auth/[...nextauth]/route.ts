@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { sql } from '@vercel/postgres';
 import bcrypt from 'bcryptjs';
 import { User } from "@/types";
@@ -31,6 +32,10 @@ const handler = NextAuth({
                 if (!passwordMatch) throw new Error('Invalid credentials');
                 return user;
             }
+        }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         })
     ],
     callbacks: {
