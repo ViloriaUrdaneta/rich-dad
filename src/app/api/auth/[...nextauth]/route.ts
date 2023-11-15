@@ -42,6 +42,7 @@ const handler = NextAuth({
                     username: profile.name,
                     password: profile.aud
                 };
+                console.log('-----------> user en Google Provider: ', user)
                 return user;
             }
         })
