@@ -22,17 +22,33 @@ function NavBar() {
                     <div>
                         {session ? (
                             <>
-                                <button className='shadow-md hover:shadow-lg dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36' onClick={() =>{signOut()}}>Log out</button>
+                                <Link href={'/balance'}>
+                                    <button 
+                                        className='hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg h-11 w-36 mr-2'
+                                    >
+                                        Balance sheet
+                                    </button>
+                                </Link>
+                                <button 
+                                    className='shadow-md hover:shadow-lg dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36' 
+                                    onClick={() =>{signOut()}}
+                                >
+                                    Log out
+                                </button>
                             </>
                         ) : (
                             <>
                                 <Link href={'/register'}>
-                                    <button className='hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg h-11 w-36 mr-2'>
+                                    <button 
+                                        className='hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg h-11 w-36 mr-2'
+                                    >
                                         Sign up
                                     </button>
                                 </Link>
                                 <Link href={'/login'}>
-                                    <button className='shadow-md hover:shadow-lg hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36'>
+                                    <button 
+                                        className='shadow-md hover:shadow-lg hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36'
+                                    >
                                         Log in
                                     </button>
                                 </Link>
@@ -45,4 +61,4 @@ function NavBar() {
     )
 }
 
-export default NavBar
+export default NavBar;
