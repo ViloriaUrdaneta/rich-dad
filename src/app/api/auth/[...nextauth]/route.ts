@@ -17,9 +17,7 @@ const handler = NextAuth({
                 console.log('credentials?.email: ', credentials?.email)
                 const trimmedEmail = credentials?.email?.trim();
                 const userFound = await sql`SELECT * FROM users WHERE email = ${trimmedEmail};`;
-                console.log("userFound: ", userFound)
                 if (!userFound.rows[0]){
-                    console.log('aca')
                     throw new Error('Invalid credentials');
                 } 
                 const user: User = {
@@ -36,6 +34,11 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+            profile(profile){
+                console.log('-----------> profile en Google Provider: ', profile)
+                const user: User = profile
+                return user;
+            }
         })
     ],
     callbacks: {
