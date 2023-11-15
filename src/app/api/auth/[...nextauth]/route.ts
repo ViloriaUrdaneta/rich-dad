@@ -36,7 +36,13 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             profile(profile){
                 console.log('-----------> profile en Google Provider: ', profile)
-                const user: User = profile
+                const user: User = {
+                    id: profile.sub,
+                    email: profile.email,
+                    username: profile.name,
+                    password: profile.aud
+                };
+                console.log('-----------> user en Google Provider: ', user)
                 return user;
             }
         })
