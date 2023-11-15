@@ -24,6 +24,10 @@ export default function LoginPage() {
         
     }
 
+    const handleGoogleLogin = async () => {
+        await signIn('google', { callbackUrl: '/' });
+    };
+
     return (
         <div className='justify-center h-[calc(100vh)] flex items-center'>
             <form onSubmit={handleSubmit} className='px-8 py-10'>
@@ -45,6 +49,10 @@ export default function LoginPage() {
                 />
                 <button className='bg-sky-300 px-4 py-2 block mb-2 rounded'>Login</button>
             </form>
+
+            <button  className='bg-sky-300 px-4 py-2 block mb-2 rounded' type="button" onClick={handleGoogleLogin}>
+                Iniciar sesión con Google
+            </button>
         </div>
     )
 }
