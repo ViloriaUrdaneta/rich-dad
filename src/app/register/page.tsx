@@ -3,6 +3,8 @@ import React, { FormEvent, useState } from 'react'
 import axios, { AxiosError } from "axios";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import googleIcon from '../../../public/google-logo.png'
 
 export default function RegisterPage() {
 
@@ -30,10 +32,9 @@ export default function RegisterPage() {
                     password: fomrData.get('password'),
                     redirect: false,
                 })
-                console.log('res: ', res)
+
                 if (res?.ok) return router.push('/dashboard')
             }
-            //
 
         } catch (error) {
             if(error instanceof AxiosError){
@@ -44,34 +45,59 @@ export default function RegisterPage() {
         
     }
 
+    const handleGoogleLogin = async () => {
+        await signIn('google', { callbackUrl: '/' });
+    };
+
 
     return (
         <div className='justify-center h-[calc(100vh)] flex items-center'>
-            <form onSubmit={handleSubmit} className=' px-8 py-10'>
-                {error && <div className='bg-red-500 text-white p-2 mb-2'>{error}</div>}
-                <h2 className='text-xl font-bold mb-5'>
-                    Register
-                </h2>
-                <input 
-                    type="text" 
-                    placeholder='User name' 
-                    name='name'
-                    className='bg-zinc-800 px-4 py-2 block mb-2 rounded'
-                />
-                <input 
-                    type="text" 
-                    placeholder='Email' 
-                    name='email'
-                    className='bg-zinc-800 px-4 py-2 block mb-2 rounded'
-                />
-                <input 
-                    type="password" 
-                    placeholder='Password' 
-                    name='password'
-                    className='bg-zinc-800 px-4 py-2 block mb-2 rounded'
-                />
-                <button className='bg-sky-300 px-4 py-2 block mb-2 rounded'>Register</button>
-            </form>
+            <div className='rounded-md border-2 px-8 py-8 shadow-md '>
+                <form onSubmit={handleSubmit} className=''>
+                    {error && <div className='bg-red-500 text-white p-2 mb-2'>{error}</div>}
+                    <h2 className='text-xl text-center font-bold mb-8'>
+                        Register
+                    </h2>
+                    <input 
+                        type="text" 
+                        placeholder='User name' 
+                        name='name'
+                        className='dark:bg-zinc-800 px-4 py-2 block mb-2 rounded w-64'
+                    />
+                    <input 
+                        type="text" 
+                        placeholder='Email' 
+                        name='email'
+                        className='dark:bg-zinc-800 px-4 py-2 block mb-2 rounded w-64'
+                    />
+                    <input 
+                        type="password" 
+                        placeholder='Password' 
+                        name='password'
+                        className='dark:bg-zinc-800 px-4 py-2 block rounded w-64 mb-4'
+                    />
+                    <button 
+                        className='px-4 py-2 block mb-2 rounded text-center w-64 border-2 hover:shadow-md hover:bg-slate-200 dark:hover:bg-slate-800'
+                    >
+                        Register
+                    </button>
+                </form>
+                <div className='flex justify-between my-6 items-centers'>
+                    <hr className='w-20 mt-3'/>
+                    <p className='text-center'>or</p>
+                    <hr className='w-20 mt-3'/>
+                </div>
+                <button  
+                    className='px-4 py-2 block mb-2 rounded w-64 border-2 hover:shadow-md hover:bg-slate-200 dark:hover:bg-slate-800' 
+                    type="button" 
+                    onClick={handleGoogleLogin}
+                >
+                    <div className='flex justify-center items-centers'>
+                        <Image src={googleIcon} alt="typescript" width={22} height={20} />
+                        <p className='text-center px-4'>Login with Google</p>
+                    </div>
+                </button>
+            </div>
         </div>
     )
 }
