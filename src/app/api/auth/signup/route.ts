@@ -23,7 +23,7 @@ export async function POST(req:NextRequest) {
 
         const hashedPassword = await bcrypt.hash(password, 12)
         const result = await sql`INSERT INTO users 
-            (user_name, email, password) VALUES (${name}, ${email}, ${hashedPassword})`;
+            (username, email, password) VALUES (${name}, ${email}, ${hashedPassword})`;
 
         return NextResponse.json(
             {message: `New user ${name} succesfully created`, result},
