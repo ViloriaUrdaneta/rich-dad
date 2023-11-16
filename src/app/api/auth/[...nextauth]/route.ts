@@ -49,7 +49,7 @@ const handler = NextAuth({
                 } else{
                     console.log('------------no entra al if------')
                     const result = await sql`INSERT INTO users 
-                        (user_name, email) VALUES (${profile.name}, ${profile.email})
+                        (username, email) VALUES (${profile.name}, ${profile.email})
                         RETURNING *`;
                     console.log('------------> result: ', result)
                     user = {
