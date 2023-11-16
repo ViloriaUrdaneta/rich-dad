@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import Providers from './Providers';
+import { ReduxProviders } from '@/redux/Providers';
 import NavBar from '@/components/NavBar';
 import Sidebar from '@/components/SideBar';
 
@@ -21,9 +22,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <Providers>
-          <NavBar/>
-          <Sidebar/>
-          {children}
+          <ReduxProviders>
+            <NavBar/>
+            <Sidebar/>
+            {children}
+          </ReduxProviders>
         </Providers>
       </body>
     </html>
