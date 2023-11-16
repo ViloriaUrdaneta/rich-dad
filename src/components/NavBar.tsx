@@ -12,7 +12,7 @@ function NavBar() {
     return (
         <div>
             <nav className='w-full shadow-md fixed top-0 left-0 right-0 z-10 h-20 align-middle border-b '>
-                <div className='flex justify-around align-middle mt-3.5 '>
+                <div className='flex justify-between mx-52 align-middle mt-3.5 '>
                     <Link href={'/'}>
                         <div className='flex'>
                             <Image src={rdIcon} alt="typescript" width={50} height={50} />
