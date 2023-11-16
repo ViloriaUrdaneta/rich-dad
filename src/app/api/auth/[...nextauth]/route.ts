@@ -23,7 +23,7 @@ const handler = NextAuth({
                 const user: User = {
                     id: userFound.rows[0].user_id,
                     email: userFound.rows[0].email,
-                    username: userFound.rows[0].username,
+                    name: userFound.rows[0].username,
                 };
                 const passwordMatch = await bcrypt.compare(credentials!.password, userFound.rows[0].password);
                 if (!passwordMatch) throw new Error('Invalid credentials');
@@ -38,19 +38,24 @@ const handler = NextAuth({
                 const userFound = await sql`SELECT * FROM users WHERE email = ${profile.email};`;
                 let user: User;
                 if (userFound.rows[0]){
+                    if(!userFound.rows[0].google_id){
+                        await sql`UPDATE users
+                            SET google_id = ${profile.sub}
+                            WHERE user_id = ${userFound.rows[0].user_id};`;
+                    }
                     user = {
                         id: userFound.rows[0].user_id,
                         email: userFound.rows[0].email,
-                        username: userFound.rows[0].username,
+                        name: userFound.rows[0].username,
                     };
-                } else{
+                } else {
                     const result = await sql`INSERT INTO users 
-                        (username, email) VALUES (${profile.name}, ${profile.email})
+                        (username, email, google_id) VALUES (${profile.name}, ${profile.email}, ${profile.sub})
                         RETURNING *`;
                     user = {
                         id: result.rows[0].user_id,
                         email: result.rows[0].email,
-                        username: result.rows[0].username,
+                        name: result.rows[0].username,
                     };
                 }
                 return user;

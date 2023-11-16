@@ -46,7 +46,7 @@ export default function RegisterPage() {
     }
 
     const handleGoogleLogin = async () => {
-        await signIn('google', { callbackUrl: '/' });
+        await signIn('google', { callbackUrl: '/dashboard' });
     };
 
 
@@ -93,7 +93,7 @@ export default function RegisterPage() {
                     onClick={handleGoogleLogin}
                 >
                     <div className='flex justify-center items-centers'>
-                        <Image src={googleIcon} alt="typescript" width={22} height={20} />
+                        <Image src={googleIcon} alt="typescript" width={24} height={18} />
                         <p className='text-center px-4'>Login with Google</p>
                     </div>
                 </button>

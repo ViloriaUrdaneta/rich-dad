@@ -7,7 +7,7 @@ import rdIcon from '../../public/monopoly-icon.png'
 function NavBar() {
 
     const {data: session, status} = useSession();
-    console.log(session)
+    console.log('navbar: ', session?.user)
 
     return (
         <div>
@@ -22,19 +22,15 @@ function NavBar() {
                     <div>
                         {session ? (
                             <>
-                                <Link href={'/balance'}>
+                                <div className='flex'>
+                                    <p className='self-center mr-8 font-semibold'>{session.user?.name}</p>
                                     <button 
-                                        className='hover:bg-slate-200 dark:hover:bg-slate-800 rounded-lg h-11 w-36 mr-2'
+                                        className='shadow-md hover:shadow-lg dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36' 
+                                        onClick={() =>{signOut()}}
                                     >
-                                        Balance sheet
+                                        Log out
                                     </button>
-                                </Link>
-                                <button 
-                                    className='shadow-md hover:shadow-lg dark:hover:bg-slate-800 rounded-lg border border-inherit h-11 w-36' 
-                                    onClick={() =>{signOut()}}
-                                >
-                                    Log out
-                                </button>
+                                </div>
                             </>
                         ) : (
                             <>

@@ -8,9 +8,8 @@ function DashboardPage() {
     console.log(session, status)
 
     return (
-        <div>
-        DashboardPage
-        </div>
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+        </main>
     )
 }
 
