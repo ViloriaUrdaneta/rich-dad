@@ -34,6 +34,7 @@ const handler = NextAuth({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
             async profile(profile){
+                console.log('----------> profile: ', profile)
                 const userFound = await sql`SELECT * FROM users WHERE email = ${profile.email};`;
                 let user: User;
                 if (userFound.rows[0]){
