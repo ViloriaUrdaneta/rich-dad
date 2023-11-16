@@ -24,9 +24,8 @@ const handler = NextAuth({
                     id: userFound.rows[0].user_id,
                     email: userFound.rows[0].email,
                     username: userFound.rows[0].user_name,
-                    password: userFound.rows[0].password
                 };
-                const passwordMatch = await bcrypt.compare(credentials!.password, user.password);
+                const passwordMatch = await bcrypt.compare(credentials!.password, userFound.rows[0].password);
                 if (!passwordMatch) throw new Error('Invalid credentials');
                 return user;
             }
@@ -34,15 +33,25 @@ const handler = NextAuth({
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID as string,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-            profile(profile){
-                console.log('-----------> profile en Google Provider: ', profile)
-                const user: User = {
-                    id: profile.sub,
-                    email: profile.email,
-                    username: profile.name,
-                    password: profile.aud
-                };
-                console.log('-----------> user en Google Provider: ', user)
+            async profile(profile){
+                const userFound = await sql`SELECT * FROM users WHERE email = ${profile.email};`;
+                let user: User;
+                if (userFound.rows[0]){
+                    user = {
+                        id: userFound.rows[0].user_id,
+                        email: userFound.rows[0].email,
+                        username: userFound.rows[0].user_name,
+                    };
+                } else{
+                    const result = await sql`INSERT INTO users 
+                        (user_name, email) VALUES (${profile.name}, ${profile.email})
+                        RETURNING *`;
+                    user = {
+                        id: result.rows[0].user_id,
+                        email: result.rows[0].email,
+                        username: result.rows[0].user_name,
+                    };
+                }
                 return user;
             }
         })
