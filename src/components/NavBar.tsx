@@ -7,7 +7,6 @@ import rdIcon from '../../public/monopoly-icon.png'
 function NavBar() {
 
     const {data: session, status} = useSession();
-    console.log('navbar: ', session?.user)
 
     return (
         <div>
