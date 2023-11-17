@@ -1,5 +1,4 @@
-
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
 type Props = {
     children: ReactNode
@@ -7,8 +6,8 @@ type Props = {
 
 const layout = (props:Props) => {
     return (
-        <div className=''>
-            <main className='' >
+        <div>
+            <main>
                 {props.children}
             </main>
         </div>
