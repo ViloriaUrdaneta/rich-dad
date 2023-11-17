@@ -32,7 +32,7 @@ export default function LoginPage() {
 
     return (
         <div className='justify-center h-[calc(100vh)] flex items-center'>
-            <div className='rounded-md border-2 px-8 py-8 shadow-md '>
+            <div className='rounded-md border-2 px-8 py-8 shadow-md'>
                 <form onSubmit={handleSubmit} className=''>
                     {error && <div className='bg-red-500 text-white p-2 mb-2'>{error}</div>}
                     <h2 className='text-xl text-center font-bold mb-8'>
