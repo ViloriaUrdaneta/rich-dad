@@ -1,6 +1,6 @@
 import { sql } from '@vercel/postgres';
-import { NextResponse } from 'next/server';
-
+import { NextRequest, NextResponse } from 'next/server';
+import { getToken } from "next-auth/jwt";
 
 export async function GET(req: Request){
 
@@ -29,9 +29,12 @@ export async function GET(req: Request){
 };
 
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
 
-    const { description, amount, category_id, date } = await request.json();
+    const token = await getToken({ req })
+    if (!token) return NextResponse.json({ message: 'No auth token' }, { status: 400 });
+
+    const { description, amount, category_id, date } = await req.json();
 
     try {
         const result = await sql`
