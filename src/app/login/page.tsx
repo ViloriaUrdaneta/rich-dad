@@ -32,7 +32,7 @@ export default function LoginPage() {
 
     return (
         <div className='justify-center h-[calc(100vh)] flex items-center'>
-            <div className='rounded-md border-2 px-8 py-8 shadow-md '>
+            <div className='rounded-md border-2 px-8 py-8 shadow-md'>
                 <form onSubmit={handleSubmit} className=''>
                     {error && <div className='bg-red-500 text-white p-2 mb-2'>{error}</div>}
                     <h2 className='text-xl text-center font-bold mb-8'>
@@ -42,12 +42,14 @@ export default function LoginPage() {
                         type="text" 
                         placeholder='Email' 
                         name='email'
+                        required
                         className='dark:bg-zinc-800 px-4 py-2 block mb-2 rounded w-64'
                     />
                     <input 
                         type="password" 
                         placeholder='Password' 
                         name='password'
+                        required
                         className='dark:bg-zinc-800 px-4 py-2 block rounded w-64 mb-4'
                     />
                     <button 
