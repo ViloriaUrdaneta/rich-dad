@@ -42,12 +42,14 @@ export default function LoginPage() {
                         type="text" 
                         placeholder='Email' 
                         name='email'
+                        required
                         className='dark:bg-zinc-800 px-4 py-2 block mb-2 rounded w-64'
                     />
                     <input 
                         type="password" 
                         placeholder='Password' 
                         name='password'
+                        required
                         className='dark:bg-zinc-800 px-4 py-2 block rounded w-64 mb-4'
                     />
                     <button 

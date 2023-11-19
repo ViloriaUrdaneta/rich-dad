@@ -23,9 +23,11 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           <ReduxProviders>
-            <NavBar/>
-            <Sidebar/>
-            {children}
+            <div id='portal'>
+              <NavBar/>
+              <Sidebar/>
+              {children}
+            </div>
           </ReduxProviders>
         </Providers>
       </body>

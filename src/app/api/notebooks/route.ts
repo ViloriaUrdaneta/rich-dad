@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 
     const user: any = token.user
     const { name } = await req.json();
-
+    console.log('----------->name: ', name)
     try {
         const result = await sql`
             INSERT INTO notebooks (name, user_id)    
@@ -57,6 +57,7 @@ export async function POST(req: NextRequest) {
         `;
         return NextResponse.json({ result }, { status: 200 });
     } catch (error) {
+        console.log('----------->error: ', error)
         return NextResponse.json({ error }, { status: 500 });
     }
 };
