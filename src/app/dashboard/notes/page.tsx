@@ -1,36 +1,63 @@
 "use client"
 import { useCreateNotebookMutation, useGetNotebooksQuery } from '@/redux/services/apiSlice';
 import NotebookComp from '@/components/Notebook';
-import { Notebook } from '@/types';
+import { NotebookUI } from '@/types';
 import { useState, useEffect  } from 'react';
 import NotebookModal from '@/components/modals/NotebookModal';
 import { createPortal } from "react-dom";
-
 
 
 export default function NotesPage() {
 
     const { data, error, isLoading } = useGetNotebooksQuery(null);
     const [ createNotebook ] = useCreateNotebookMutation();
-    const [ notebookModalOpen, setNotebookModalOpen ] = useState(false)
+    const [ notebookModalOpen, setNotebookModalOpen ] = useState(false);
     const [ portalElement, setPortalElement ] = useState<Element | null>(null);
+    const [ notebooksUI, setNotebooksUI ] = useState<NotebookUI[]>([]);
+    const [ selectedNotebook, setSelectedNotebook ] = useState<NotebookUI>();
+
+    const notebookModalHandler = () => {
+        setNotebookModalOpen(!notebookModalOpen);
+    };
 
     useEffect(() => {
         setPortalElement(document.getElementById("portal"));
     }, []);
 
-    const notebookModalHandler = () => {
-        setNotebookModalOpen(!notebookModalOpen)
-    }
+    useEffect(()=>{
+        if(data){
+            const notebooksList: NotebookUI[] = data.result.map(nb => ({
+                ...nb,
+                selected: false
+            }));
+            notebooksList[0].selected = true;
+            setNotebooksUI(notebooksList);
+            setSelectedNotebook(notebooksList[0]);
+        };
+    },[data]);
 
     const addNotebook =  async (name: string) => {
         try {
             await createNotebook({name});
         } catch (error) {
-            console.log(error)
+            console.log(error);
         };
         notebookModalHandler();
-    }
+    };
+
+    const handleSelectedNotebook = (notebook: NotebookUI) => {
+        setSelectedNotebook(notebook);
+        const newNotebooksList: any = notebooksUI.map(nb => {
+            if (nb.id === notebook.id) {
+                notebook.selected = true;
+                return notebook;
+            } else {
+                nb.selected = false;
+                return nb;
+            }
+        });
+        setNotebooksUI(newNotebooksList);
+    };
 
     return (
         <main className="flex justify-between min-h-screen pt-20">
@@ -41,7 +68,7 @@ export default function NotesPage() {
             <nav className="w-72 border-l-2 order-last mr-48">
                 <h4 className='text-2xl mt-6 self-center text-center'>Your notebooks</h4>
                 <hr className='mx-6 my-3 shadow'/>
-                { data && ( <NotebookComp notebooks={data.result}/> )}
+                { data && ( <NotebookComp notebooks={notebooksUI} handleNotebookClik={handleSelectedNotebook}/> )}
                 <button 
                     className='m-6 hover:shadow-xl dark:hover:bg-slate-800 rounded p-3 font-semibold'
                     onClick={notebookModalHandler}

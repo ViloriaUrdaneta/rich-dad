@@ -10,6 +10,10 @@ export interface Notebook {
     user_id: string
 }
 
+export interface NotebookUI extends Notebook {
+    selected: boolean
+}
+
 export interface NotebookDTO {
     message: string,
     result: Notebook[],
